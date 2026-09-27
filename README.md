@@ -44,6 +44,7 @@ The screenshots below show the completed Gemini run and the editable criteria lo
 | `tests/test_core.py` | Validation, formulas, tie breaks, zero benchmark, persistence |
 | `docs/Agentic_RFP_Evaluation_Submission.docx` | Formatted submission report |
 | `docs/Agentic_RFP_Evaluation_Submission.pdf` | PDF copy of the submission report |
+| `docs/Demonstration.md` | Successful run and validation case with screenshots |
 
 ## Evaluation flow
 
@@ -118,3 +119,4 @@ The integration follows the official [Gemini generateContent API](https://ai.goo
 - Historical experience is user supplied and affects tie breaks only.
 - Proposal evidence and explanations come from the model; arithmetic and ranking come from Python.
 - Relative performance is 100% when every supplier scores zero on a criterion.
+

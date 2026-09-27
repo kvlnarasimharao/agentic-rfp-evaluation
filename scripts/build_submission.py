@@ -122,7 +122,7 @@ grid(["Required item", "Included deliverable"], [
     ("Public deployed app", "https://rfp-evaluation-kvlnarasimharao.streamlit.app/"),
     ("README", "README.md contains setup, architecture, formulas, assumptions, and screenshots"),
     ("Completed JSON export", "data/live_run.json stores one completed four-supplier RFP run"),
-    ("Short demonstration", "Sample run shows a successful Gemini result and a separate validation example"),
+    ("Short demonstration", "docs/Demonstration.md shows a completed run and a validation case with screenshots"),
 ], [2.0, 4.9])
 
 doc.add_page_break()
@@ -198,7 +198,7 @@ grid(["Check", "Result"], [
     ("Persistence", "A complete two-supplier run is saved and loaded from SQLite."),
     ("Application", "The live app opens; Sample run shows four ranks, scorecards, warnings, and JSON download."),
 ], [1.55, 5.35])
-p("All four automated tests passed. The four proposal PDFs were evaluated in one Gemini batch, and the local interface was checked for criteria editing, input, sample results, scorecards, and export. The public Streamlit app was opened and its saved sample run was checked.")
+p("All four automated tests passed. The four proposal PDFs were evaluated in one Gemini batch, and the local interface was checked for criteria editing, input, sample results, scorecards, and export. The public Streamlit app was opened and its saved sample run was checked. Streamlit application testing loaded all four tabs with no exceptions and displayed the clipped-score warning when the validation example was selected.")
 
 h("Demonstration sequence")
 p("Successful run: open the live app and select Sample run, then Live Gemini evaluation. The leaderboard shows four final ranks. Expand Apex Systems to inspect the criterion explanations, supporting evidence, benchmark, gap, and relative percentages. Use Download complete result as JSON to export the saved run.")
@@ -237,4 +237,5 @@ doc.add_picture(str(bw_dir / "criteria.jpg"), width=Inches(6.75))
 
 doc.save(OUT)
 print(OUT)
+
 
