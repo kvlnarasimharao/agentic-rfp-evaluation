@@ -13,11 +13,14 @@ subprocess.run([sys.executable, str(ROOT / "scripts" / "build_submission.py")], 
 source_path = str(docx).replace("'", "''")
 target_path = str(pdf).replace("'", "''")
 script = (
+    "$ErrorActionPreference = 'Stop'; "
     "$word = New-Object -ComObject Word.Application; "
     "$word.Visible = $false; "
+    "try { "
     f"$document = $word.Documents.Open('{source_path}', $false, $true); "
     f"$document.ExportAsFixedFormat('{target_path}', 17); "
-    "$document.Close($false); $word.Quit()"
+    "$document.Close($false); "
+    "} finally { $word.Quit() }"
 )
 subprocess.run(["powershell.exe", "-NoProfile", "-Command", script], check=True)
 print(pdf)

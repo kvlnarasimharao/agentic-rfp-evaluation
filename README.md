@@ -21,11 +21,17 @@ The **Sample run** tab works without an API key. It contains a live Gemini evalu
 
 ## Application screenshots
 
-The screenshots below show the completed Gemini run and the editable criteria loaded from SQLite.
+The public app was tested by uploading the four included PDFs, completing a new batch, opening the saved result, and downloading its JSON export.
 
-![Leaderboard for four suppliers](docs/screenshots/leaderboard.jpg)
+![Four supplier PDFs uploaded](docs/screenshots/upload_four_suppliers.png)
 
-![Active criteria and weights](docs/screenshots/criteria.jpg)
+![Completed hosted run](docs/screenshots/completed_live_batch.png)
+
+![Detailed supplier scorecard](docs/screenshots/live_scorecard.png)
+
+![Active criteria and weights](docs/screenshots/active_criteria.png)
+
+![Validation example](docs/screenshots/validation_case.png)
 
 ## Included files
 
@@ -38,6 +44,7 @@ The screenshots below show the completed Gemini run and the editable criteria lo
 | `rfp/workflow.py` | Batch orchestration and atomic persistence |
 | `data/proposals/*.pdf` | Four fictional two-page supplier proposals |
 | `data/live_run.json` | Completed evaluation from Gemini 2.5 Flash |
+| `data/hosted_run.json` | JSON downloaded from a completed run on the public app |
 | `data/sample_run.json` | Reproducible example with an invalid score corrected to zero |
 | `scripts/generate_demo.py` | Regenerate proposals and the validation example |
 | `scripts/run_live_demo.py` | Run all four proposals through Gemini using an environment key |
@@ -85,7 +92,7 @@ The zero benchmark rule treats suppliers as tied on a criterion with no positive
 | NexaWorks | Strong milestone plan and support, balanced cost |
 | Orbit Digital | Extensive references, unclear ERP integration scope |
 
-Each PDF contains the same procurement request plus a solution, timeline and team, price and assumptions, security and risk controls, support, experience, and references. All names and projects in the proposals are fictional.
+The four PDFs use different layouts and section orders. Each contains the same procurement request plus a solution, timeline and team, price and assumptions, security and risk controls, support, experience, and references. All names and projects in the proposals are fictional.
 
 ## Completed demonstration
 

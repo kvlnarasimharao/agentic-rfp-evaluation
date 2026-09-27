@@ -5,17 +5,17 @@ import sys
 from pathlib import Path
 
 from reportlab.lib import colors
-from reportlab.lib.styles import getSampleStyleSheet
-from reportlab.lib.enums import TA_CENTER
+from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+from reportlab.lib.enums import TA_CENTER, TA_LEFT, TA_RIGHT
 from reportlab.lib.pagesizes import A4
-from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle, PageBreak
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle, PageBreak, HRFlowable
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from rfp.database import connect, initialize
 from rfp.workflow import evaluate_batch
 
-REQUEST = "A fictional university seeks a secure supplier evaluation portal for 200 procurement users. The portal must import proposal PDFs, support role-based access, show traceable scores, and export results. Delivery is expected within 16 weeks."
+REQUEST = "The university seeks a secure supplier evaluation portal for 200 procurement users. The portal must import proposal PDFs, support role-based access, show traceable scores, and export results. Delivery is expected within 16 weeks."
 
 PROPOSALS = {
     "Apex Systems": {
@@ -62,37 +62,138 @@ PROPOSALS = {
 
 
 def make_pdf(name, data, output):
+    variants = {
+        "Apex Systems": {
+            "accent": "#203B4B", "tint": "#EDF2F4", "title_size": 22,
+            "title_align": TA_LEFT, "section_prefix": "", "lead": "TECHNICAL SOLUTION",
+            "page_two": "Commercial offer and assurance",
+            "first_order": [("Executive summary", "summary"),
+                            ("Proposed solution", "solution"),
+                            ("Implementation approach and timeline", "implementation")],
+            "second_order": [("Security and compliance", "security"),
+                             ("Support and experience", "support"),
+                             ("Delivery considerations", "risk")],
+        },
+        "BrightPath Tech": {
+            "accent": "#965A24", "tint": "#F8F0E8", "title_size": 24,
+            "title_align": TA_LEFT, "section_prefix": "", "lead": "RAPID DELIVERY OFFER",
+            "page_two": "Pricing and service commitment",
+            "first_order": [("Executive summary", "summary"),
+                            ("Implementation approach and timeline", "implementation"),
+                            ("Proposed solution", "solution")],
+            "second_order": [("Support and experience", "support"),
+                             ("Security and compliance", "security"),
+                             ("Delivery considerations", "risk")],
+        },
+        "NexaWorks": {
+            "accent": "#2D594E", "tint": "#EDF4F0", "title_size": 21,
+            "title_align": TA_CENTER, "section_prefix": "0", "lead": "IMPLEMENTATION PROPOSAL",
+            "page_two": "Commercial and operating plan",
+            "first_order": [("Executive summary", "summary"),
+                            ("Proposed solution", "solution"),
+                            ("Implementation approach and timeline", "implementation")],
+            "second_order": [("Security and compliance", "security"),
+                             ("Support and experience", "support"),
+                             ("Delivery considerations", "risk")],
+        },
+        "Orbit Digital": {
+            "accent": "#514B60", "tint": "#F1F0F4", "title_size": 22,
+            "title_align": TA_RIGHT, "section_prefix": "", "lead": "PUBLIC SECTOR DELIVERY",
+            "page_two": "Experience, commercial terms and controls",
+            "first_order": [("Executive summary", "summary"),
+                            ("Proposed solution", "solution"),
+                            ("Implementation approach and timeline", "implementation")],
+            "second_order": [("Support, experience and references", "support"),
+                             ("Security and compliance", "security"),
+                             ("Delivery considerations", "risk")],
+        },
+    }
+    fees = {
+        "Apex Systems": ("138,000", "22,000", "160,000"),
+        "BrightPath Tech": ("65,000", "12,000", "77,000"),
+        "NexaWorks": ("99,000", "18,000", "117,000"),
+        "Orbit Digital": ("110,000", "19,000", "129,000"),
+    }
+    v = variants[name]
+    accent = colors.HexColor(v["accent"])
+    tint = colors.HexColor(v["tint"])
     styles = getSampleStyleSheet()
-    styles["Title"].textColor = colors.HexColor("#173042")
-    styles["Title"].fontSize = 18
-    styles["Heading2"].textColor = colors.HexColor("#176B87")
-    styles["BodyText"].leading = 15
-    doc = SimpleDocTemplate(str(output), pagesize=A4, rightMargin=52, leftMargin=52,
-                            topMargin=50, bottomMargin=52)
-    story = [Paragraph(name + " Supplier Proposal", styles["Title"]), Spacer(1, 15),
-             Paragraph("Fictional procurement request", styles["Heading2"]),
-             Paragraph(REQUEST, styles["BodyText"]), Spacer(1, 12)]
-    for heading, key in [("Executive summary", "summary"), ("Proposed solution", "solution"),
-                         ("Implementation approach and timeline", "implementation")]:
-        story.extend([Paragraph(heading, styles["Heading2"]), Paragraph(data[key], styles["BodyText"]), Spacer(1, 14)])
+    styles.add(ParagraphStyle(name="ProposalTitle", parent=styles["Title"],
+        fontName="Helvetica-Bold", fontSize=v["title_size"], leading=v["title_size"] + 3,
+        textColor=accent, alignment=v["title_align"], spaceAfter=6))
+    styles.add(ParagraphStyle(name="ProposalLead", parent=styles["Normal"],
+        fontName="Helvetica-Bold", fontSize=9, leading=12, textColor=accent,
+        alignment=v["title_align"], spaceAfter=15))
+    styles.add(ParagraphStyle(name="ProposalSection", parent=styles["Heading2"],
+        fontName="Helvetica-Bold", fontSize=11.5, leading=14,
+        textColor=accent, spaceBefore=10, spaceAfter=5))
+    styles.add(ParagraphStyle(name="ProposalBody", parent=styles["BodyText"],
+        fontName="Helvetica", fontSize=10.3, leading=15.5, spaceAfter=10))
+    styles.add(ParagraphStyle(name="ProposalSmall", parent=styles["BodyText"],
+        fontName="Helvetica", fontSize=9.1, leading=13.4, spaceAfter=6))
+    doc = SimpleDocTemplate(str(output), pagesize=A4, rightMargin=54, leftMargin=54,
+                            topMargin=48, bottomMargin=48)
+    story = []
+    def section(label, key, index=None):
+        display = label
+        if v["section_prefix"] and index is not None:
+            display = str(index).zfill(2) + "  " + label
+        story.append(Paragraph(display, styles["ProposalSection"]))
+        story.append(Paragraph(data[key], styles["ProposalBody"]))
+    def rule():
+        story.append(HRFlowable(width="100%", thickness=1.2, color=accent))
+        story.append(Spacer(1, 12))
+    def price_table():
+        rows = [["Cost item", "USD"], ["Implementation", fees[name][0]],
+                ["Annual support", fees[name][1]], ["First-year total", fees[name][2]]]
+        table = Table(rows, colWidths=[330, 150], hAlign="LEFT")
+        table.setStyle(TableStyle([
+            ("BACKGROUND", (0, 0), (-1, 0), accent),
+            ("TEXTCOLOR", (0, 0), (-1, 0), colors.white),
+            ("BACKGROUND", (0, 1), (-1, -1), tint),
+            ("TEXTCOLOR", (0, 1), (-1, -1), colors.black),
+            ("FONTNAME", (0, 0), (-1, 0), "Helvetica-Bold"),
+            ("FONTNAME", (0, -1), (-1, -1), "Helvetica-Bold"),
+            ("ALIGN", (1, 1), (1, -1), "RIGHT"),
+            ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
+            ("LINEBELOW", (0, -1), (-1, -1), .7, accent),
+            ("TOPPADDING", (0, 0), (-1, -1), 7),
+            ("BOTTOMPADDING", (0, 0), (-1, -1), 7),
+        ]))
+        story.append(table)
+        story.append(Spacer(1, 9))
+        story.append(Paragraph(data["price"], styles["ProposalSmall"]))
+    story.append(Paragraph(name, styles["ProposalTitle"]))
+    story.append(Paragraph(v["lead"], styles["ProposalLead"]))
+    if name in ("Apex Systems", "Orbit Digital"):
+        rule()
+    if name == "BrightPath Tech":
+        card = Table([[Paragraph(data["summary"], styles["ProposalBody"])]], colWidths=[480])
+        card.setStyle(TableStyle([("BACKGROUND", (0, 0), (-1, -1), tint),
+            ("LEFTPADDING", (0, 0), (-1, -1), 13),
+            ("RIGHTPADDING", (0, 0), (-1, -1), 13),
+            ("TOPPADDING", (0, 0), (-1, -1), 10),
+            ("BOTTOMPADDING", (0, 0), (-1, -1), 3)]))
+        story.append(card)
+        story.append(Spacer(1, 8))
+    story.append(Paragraph("Requirement understood", styles["ProposalSection"]))
+    story.append(Paragraph(REQUEST, styles["ProposalSmall"]))
+    for i, (label, key) in enumerate(v["first_order"], 1):
+        if name == "BrightPath Tech" and key == "summary":
+            continue
+        section(label, key, i)
     story.append(PageBreak())
-    story.append(Paragraph(name + " Supplier Proposal", styles["Title"]))
-    story.append(Spacer(1, 12))
-    story.append(Paragraph("Price and assumptions", styles["Heading2"]))
-    price = data["price"]
-    story.append(Paragraph(price, styles["BodyText"]))
-    story.append(Spacer(1, 14))
-    for heading, key in [("Security, compliance, and risk controls", "security"),
-                         ("Support, experience, and references", "support"),
-                         ("Key delivery risk", "risk")]:
-        story.extend([Paragraph(heading, styles["Heading2"]), Paragraph(data[key], styles["BodyText"]), Spacer(1, 14)])
-    def footer(canvas, doc):
-        canvas.setFont("Helvetica", 9)
-        canvas.setFillColor(colors.HexColor("#647786"))
-        canvas.drawString(52, 28, "Fictional classroom proposal")
-        canvas.drawRightString(A4[0] - 52, 28, f"Page {doc.page}")
-    doc.build(story, onFirstPage=footer, onLaterPages=footer)
-
+    story.append(Paragraph(v["page_two"], styles["ProposalTitle"]))
+    if name == "NexaWorks":
+        rule()
+    if name == "Orbit Digital":
+        section(*v["second_order"][0], 1)
+    story.append(Paragraph("Price and assumptions", styles["ProposalSection"]))
+    price_table()
+    remaining = v["second_order"][1:] if name == "Orbit Digital" else v["second_order"]
+    for i, (label, key) in enumerate(remaining, 2 if name == "Orbit Digital" else 1):
+        section(label, key, i)
+    doc.build(story)
 
 def main():
     folder = ROOT / "data" / "proposals"

@@ -121,7 +121,7 @@ grid(["Required item", "Included deliverable"], [
     ("Four supplier PDFs", "data/proposals/apex_systems.pdf, brightpath_tech.pdf, nexaworks.pdf, orbit_digital.pdf"),
     ("Public deployed app", "https://rfp-evaluation-kvlnarasimharao.streamlit.app/"),
     ("README", "README.md contains setup, architecture, formulas, assumptions, and screenshots"),
-    ("Completed JSON export", "data/live_run.json stores one completed four-supplier RFP run"),
+    ("Completed JSON export", "data/live_run.json and data/hosted_run.json store completed four-supplier runs"),
     ("Short demonstration", "docs/Demonstration.md shows a completed run and a validation case with screenshots"),
 ], [2.0, 4.9])
 
@@ -198,7 +198,7 @@ grid(["Check", "Result"], [
     ("Persistence", "A complete two-supplier run is saved and loaded from SQLite."),
     ("Application", "The live app opens; Sample run shows four ranks, scorecards, warnings, and JSON download."),
 ], [1.55, 5.35])
-p("All four automated tests passed. The four proposal PDFs were evaluated in one Gemini batch, and the local interface was checked for criteria editing, input, sample results, scorecards, and export. The public Streamlit app was opened and its saved sample run was checked. Streamlit application testing loaded all four tabs with no exceptions and displayed the clipped-score warning when the validation example was selected.")
+p("All four automated tests passed. The four proposal PDFs were evaluated in one Gemini batch. A separate test uploaded the revised PDFs to the public Streamlit app, completed and saved a new four-supplier run, then downloaded its JSON export. The public app also displayed the criteria, detailed scorecards, and validation example. Streamlit application testing loaded all four tabs with no exceptions.")
 
 h("Demonstration sequence")
 p("Successful run: open the live app and select Sample run, then Live Gemini evaluation. The leaderboard shows four final ranks. Expand Apex Systems to inspect the criterion explanations, supporting evidence, benchmark, gap, and relative percentages. Use Download complete result as JSON to export the saved run.")
@@ -234,6 +234,27 @@ for screenshot_name in ("leaderboard", "criteria"):
 doc.add_picture(str(bw_dir / "leaderboard.jpg"), width=Inches(6.75))
 p("Active criteria and weights loaded from SQLite.")
 doc.add_picture(str(bw_dir / "criteria.jpg"), width=Inches(6.75))
+
+def screenshot_crop(name, top, bottom):
+    source = ROOT / "docs" / "screenshots" / f"{name}.png"
+    image = Image.open(source).convert("L")
+    output = bw_dir / f"{name}_crop.png"
+    image.crop((0, top, image.width, min(bottom, image.height))).save(output)
+    return output
+
+doc.add_page_break()
+h("Hosted evaluation screenshots")
+p("The public app accepted the four revised supplier PDFs and their metadata.")
+doc.add_picture(str(screenshot_crop("upload_four_suppliers", 255, 1280)), width=Inches(6.1))
+p("The completed batch was saved under one run ID. Its JSON export is included as data/hosted_run.json.")
+doc.add_picture(str(screenshot_crop("completed_live_batch", 270, 1230)), width=Inches(6.1))
+
+doc.add_page_break()
+h("Scorecard and validation screenshots")
+p("The scorecard shows each criterion score with its explanation, proposal evidence, benchmark, gap, and relative result.")
+doc.add_picture(str(screenshot_crop("live_scorecard", 700, 1600)), width=Inches(6.45))
+p("The separate validation example corrects an invalid score before calculating the final order.")
+doc.add_picture(str(screenshot_crop("validation_case", 265, 970)), width=Inches(6.45))
 
 doc.save(OUT)
 print(OUT)
