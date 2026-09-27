@@ -107,7 +107,7 @@ for item in (
     "Loads active criteria and weights from SQLite and displays them in the Criteria tab.",
     "Accepts at least two supplier PDFs with supplier name, submission date, and historical experience rating.",
     "Evaluates each PDF independently against the criteria active at the start of the batch.",
-    "Corrects missing, malformed, duplicate, and out-of-range model results and records warnings.",
+    "Corrects missing, malformed, duplicate, and out-of-range model results and records each correction.",
     "Calculates weighted scores, peer benchmarks, gaps, relative percentages, PPI, and final ranks in Python.",
     "Saves the full batch under one run ID and offers leaderboard, scorecards, and JSON download.",
 ):
@@ -141,7 +141,7 @@ p("The user uploads the proposals and enters metadata. The orchestrator reloads 
 grid(["Stage", "Input", "Output"], [
     ("Setup", "SQLite criteria", "Active criteria with total weight of 100%"),
     ("Evaluate", "PDF text and active criteria", "Scores, reasons, evidence, risks, summary"),
-    ("Validate", "Model JSON", "Complete scorecards and warnings"),
+    ("Validate", "Model JSON", "Complete scorecards and correction records"),
     ("Compare", "Validated supplier scores", "Benchmarks, gaps, relative results, PPI"),
     ("Finish", "Peer results and metadata", "Ranks, saved run, leaderboard, JSON export"),
 ], [1.05, 2.55, 3.3])
@@ -166,15 +166,15 @@ for item in (
     "Invalid JSON or a non-object response becomes an empty assessment; missing criteria receive zero.",
     "Unknown and duplicate criterion IDs are ignored. Missing expected criteria receive zero.",
     "Non-numeric or non-finite scores become zero. Scores outside the range are clipped.",
-    "Missing explanations receive a placeholder. Missing evidence is flagged in the warnings.",
+    "Missing explanations receive a placeholder. Missing evidence is recorded for review.",
     "A malformed risks field becomes an empty list. Every correction is recorded with the supplier name.",
 ):
     bullet(item)
 p("Supplier names must be unique within a batch. Experience ratings must be between 0 and 10. Submission dates are checked before ranking. The application rejects PDFs that contain too little selectable text.")
 
 h("Stored data and output")
-p("SQLite has three tables: evaluation_criteria, rfp_runs, and supplier_results. The first stores the editable rubric. The run table stores the creation time, criteria snapshot, warnings, and complete result JSON. The supplier table stores each supplier's metadata, absolute score, PPI, rank, and scorecard. One RFP_RUN_ID connects all suppliers in a batch. The API key is not written to these tables or to the JSON export.")
-p("The interface has Evaluate, Criteria, Saved runs, and Sample run tabs. A completed run displays the ranked leaderboard, every criterion's score and evidence, peer comparisons, warnings, and a JSON download. The Sample run tab includes the completed Gemini result and a separate validation example.")
+p("SQLite has three tables: evaluation_criteria, rfp_runs, and supplier_results. The first stores the editable rubric. The run table stores the creation time, criteria snapshot, correction records, and complete result JSON. The supplier table stores each supplier's metadata, absolute score, PPI, rank, and scorecard. One RFP_RUN_ID connects all suppliers in a batch. The API key is not written to these tables or to the JSON export.")
+p("The interface has Evaluate, Criteria, Saved runs, and Sample run tabs. A completed run displays the ranked leaderboard, every criterion's score and evidence, peer comparisons, validation corrections, and a JSON download. The Sample run tab includes the completed Gemini result and a separate validation example.")
 
 h("Demonstration data")
 grid(["Supplier", "PDF file", "Intended difference"], [
@@ -196,13 +196,13 @@ grid(["Check", "Result"], [
     ("Response normalization", "Missing results, duplicate IDs, invalid values, and clipping are covered."),
     ("Scoring and ranking", "Weighted score, peer measures, zero benchmark, and every tie break are covered."),
     ("Persistence", "A complete two-supplier run is saved and loaded from SQLite."),
-    ("Application", "The live app opens; Sample run shows four ranks, scorecards, warnings, and JSON download."),
+    ("Application", "The live app opens; Sample run shows four ranks, scorecards, corrections, and JSON download."),
 ], [1.55, 5.35])
 p("All four automated tests passed. The four proposal PDFs were evaluated in one Gemini batch. A separate test uploaded the revised PDFs to the public Streamlit app, completed and saved a new four-supplier run, then downloaded its JSON export. The public app also displayed the criteria, detailed scorecards, and validation example. Streamlit application testing loaded all four tabs with no exceptions.")
 
 h("Demonstration sequence")
 p("Successful run: open the live app and select Sample run, then Live Gemini evaluation. The leaderboard shows four final ranks. Expand Apex Systems to inspect the criterion explanations, supporting evidence, benchmark, gap, and relative percentages. Use Download complete result as JSON to export the saved run.")
-p("Validation case: in Sample run, select Validation example. Its deliberately out-of-range criterion score is clipped to zero before scoring, and the warning is shown in Run details. The completed Gemini example also displays a malformed risks-field warning for BrightPath Tech. These cases demonstrate that model output is checked before ranking.")
+p("Validation case: in Sample run, select Validation example. Its deliberately out-of-range criterion score is clipped to zero before scoring, and the correction is recorded in Run details. The completed Gemini example also corrects a malformed risks field for BrightPath Tech. These cases demonstrate that model output is checked before ranking.")
 
 doc.add_page_break()
 h("How to run and present the project")
