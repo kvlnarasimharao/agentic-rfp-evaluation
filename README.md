@@ -2,6 +2,9 @@
 
 A Streamlit application that reads supplier proposal PDFs, asks Gemini or Ollama Cloud for evidence-based criterion scores, validates the response, and ranks suppliers with fixed Python rules. The repository includes four fictional two-page proposals, a completed Gemini run, a validation example, and automated checks.
 
+Public repository: https://github.com/kvlnarasimharao/agentic-rfp-evaluation
+Live app: https://rfp-evaluation-kvlnarasimharao.streamlit.app/
+
 ## Run locally
 
 ```powershell
@@ -103,7 +106,7 @@ To run the four proposals through Gemini again, set `GEMINI_API_KEY` in your she
 
 ## Deployment
 
-The entry point is `streamlit_app.py`. In Streamlit Community Cloud, create an app from this repository and select the `main` branch and that entry point. The repository contains `requirements.txt` and `.streamlit/config.toml`. Visitors can inspect the included run without a key or supply their own key for a new batch.
+The entry point is `streamlit_app.py`. In Streamlit Community Cloud, create an app from this repository and select the `main` branch and that entry point. The repository contains `requirements.txt` and `.streamlit/config.toml`. Set `GEMINI_API_KEY` in Streamlit app secrets to let visitors evaluate a new batch without entering a key. The included run can always be inspected without a key.
 
 SQLite is stored at `data/rfp.sqlite3` by default. It is created on startup and ignored by Git. Cloud instance restarts may reset local SQLite files, so download JSON exports for records you need to retain.
 

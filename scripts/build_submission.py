@@ -107,7 +107,9 @@ doc.add_heading("Validation and testing", level=1)
 paragraph("The separate validation example includes an out-of-range criterion score that is corrected to zero. Four automated tests pass. They cover missing and malformed results, score clipping, weighted scores and peer measures, all tie breaks, a zero benchmark, and complete SQLite persistence. The local Streamlit interface was opened and checked for the criteria view, evaluation form, sample leaderboard, scorecards, and export control.")
 
 doc.add_heading("Project files and demonstration", level=1)
-paragraph("The repository contains the Streamlit application, Python modules, requirements file, database seed script, four proposal PDFs, the completed JSON export, the validation example, and tests. To start locally, install requirements, run the seed script, and launch `streamlit run streamlit_app.py`. The Sample run tab displays the completed evaluation without a key. For a new batch, upload proposal PDFs and enter a Gemini or Ollama Cloud key in the AI connection panel.")
+paragraph("The repository contains the Streamlit application, Python modules, requirements file, database seed script, four proposal PDFs, the completed JSON export, the validation example, and tests. To start locally, install requirements, run the seed script, and launch `streamlit run streamlit_app.py`. The Sample run tab displays the completed evaluation without a key. The hosted app has a Gemini key configured in Streamlit secrets, so a new batch can be evaluated without entering a key.")
+paragraph("Public repository: https://github.com/kvlnarasimharao/agentic-rfp-evaluation")
+paragraph("Live application: https://rfp-evaluation-kvlnarasimharao.streamlit.app/")
 
 doc.add_heading("Technical references", level=1)
 paragraph("Google AI for Developers, Gemini generateContent API: https://ai.google.dev/api/generate-content")

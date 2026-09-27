@@ -95,8 +95,14 @@ with tab_evaluate:
             entries.append({"supplier_name": name, "submission_date": submitted.isoformat(),
                             "experience_rating": experience, "pdf_bytes": file.getvalue()})
     with st.expander("AI connection"):
-        st.caption("The key is not written to SQLite or the export. A deployment key can be stored in Streamlit secrets.")
         provider = st.selectbox("Provider", ["Gemini", "Ollama Cloud"])
+        secret_name = "GEMINI_API_KEY" if provider == "Gemini" else "OLLAMA_API_KEY"
+        try:
+            hosted_key_available = bool(os.environ.get(secret_name) or st.secrets.get(secret_name, ""))
+        except Exception:
+            hosted_key_available = bool(os.environ.get(secret_name))
+        st.caption("A hosted key is available. Leave this blank to use it." if hosted_key_available
+                   else "Enter your API key. It is not saved in SQLite or the JSON export.")
         api_key = st.text_input("API key", type="password")
         model = st.text_input("Model", value="gemini-2.5-flash" if provider == "Gemini" else "gpt-oss:120b-cloud")
     if st.button("Evaluate suppliers", type="primary", disabled=len(entries) < 2):
