@@ -1,0 +1,364 @@
+{
+  "rfp_run_id": "486177eb-9bf7-4e5e-9733-5b3839cb6e2b",
+  "created_at": "2026-09-27T07:29:29.901064+00:00",
+  "criteria": [
+    {
+      "criterion_id": 1,
+      "name": "Technical Capability",
+      "description": "Architecture, integrations, scalability, technical fit",
+      "weight": 30.0,
+      "max_score": 10.0,
+      "is_active": 1
+    },
+    {
+      "criterion_id": 2,
+      "name": "Implementation Plan",
+      "description": "Timeline, milestones, staffing, risk plan",
+      "weight": 20.0,
+      "max_score": 10.0,
+      "is_active": 1
+    },
+    {
+      "criterion_id": 3,
+      "name": "Commercial Value",
+      "description": "Pricing clarity, total cost, assumptions",
+      "weight": 20.0,
+      "max_score": 10.0,
+      "is_active": 1
+    },
+    {
+      "criterion_id": 4,
+      "name": "Security & Compliance",
+      "description": "Controls, certifications, privacy, auditability",
+      "weight": 20.0,
+      "max_score": 10.0,
+      "is_active": 1
+    },
+    {
+      "criterion_id": 5,
+      "name": "Support & Experience",
+      "description": "Support model, similar projects, references",
+      "weight": 10.0,
+      "max_score": 10.0,
+      "is_active": 1
+    }
+  ],
+  "benchmark": {
+    "1": 9.0,
+    "2": 10.0,
+    "3": 9.0,
+    "4": 9.0,
+    "5": 10.0
+  },
+  "suppliers": [
+    {
+      "supplier_name": "NexaWorks",
+      "criteria": [
+        {
+          "criterion_id": 1,
+          "name": "Technical Capability",
+          "score": 8.0,
+          "max_score": 10.0,
+          "weight": 30.0,
+          "justification": "The proposal provides the quoted technical detail.",
+          "evidence": "The design separates PDF intake, evaluation, and reporting. It specifies REST integration with the ERP, SAML SSO, a staging environment, and a 250-user performance test.",
+          "benchmark": 9.0,
+          "gap": -1.0,
+          "relative_percent": 88.8889
+        },
+        {
+          "criterion_id": 2,
+          "name": "Implementation Plan",
+          "score": 10.0,
+          "max_score": 10.0,
+          "weight": 20.0,
+          "justification": "The proposal provides the quoted implementation detail.",
+          "evidence": "A 12-week plan has named role owners and acceptance gates: discovery weeks 1-2, prototype weeks 3-4, implementation weeks 5-8, ERP integration weeks 9-10, testing week 11, and training plus go-live week 12. A two-week fallback window and weekly risk review are included.",
+          "benchmark": 10.0,
+          "gap": 0.0,
+          "relative_percent": 100.0
+        },
+        {
+          "criterion_id": 3,
+          "name": "Commercial Value",
+          "score": 8.0,
+          "max_score": 10.0,
+          "weight": 20.0,
+          "justification": "The proposal provides the quoted commercial detail.",
+          "evidence": "Implementation fee: USD 99,000. Annual support: USD 18,000. Total first year: USD 117,000. Includes one ERP connector, training, and migration of up to 2,000 PDFs. Additional migration is USD 3 per file.",
+          "benchmark": 9.0,
+          "gap": -1.0,
+          "relative_percent": 88.8889
+        },
+        {
+          "criterion_id": 4,
+          "name": "Security & Compliance",
+          "score": 8.0,
+          "max_score": 10.0,
+          "weight": 20.0,
+          "justification": "The proposal provides the quoted security detail.",
+          "evidence": "Controls include role-based access, SAML SSO, encryption in transit and at rest, monthly vulnerability scans, daily backups, and 180-day audit logs. Incident notification is within 48 hours. No external certification is claimed.",
+          "benchmark": 9.0,
+          "gap": -1.0,
+          "relative_percent": 88.8889
+        },
+        {
+          "criterion_id": 5,
+          "name": "Support & Experience",
+          "score": 10.0,
+          "max_score": 10.0,
+          "weight": 10.0,
+          "justification": "The proposal provides the quoted support detail.",
+          "evidence": "A named service manager, 24-hour critical incident channel, two-hour response target, quarterly service reviews, and 99.7% availability target are offered. Three public-sector projects and two contactable references are listed.",
+          "benchmark": 10.0,
+          "gap": 0.0,
+          "relative_percent": 100.0
+        }
+      ],
+      "risks": [
+        "External certification is not claimed and extra migration volume costs more."
+      ],
+      "overall_summary": "NexaWorks proposes a balanced procurement portal with document intake, reviewer workflow, score traceability, and JSON export for the 200-user university team.",
+      "submission_date": "2026-09-16",
+      "experience_rating": 8.0,
+      "absolute_score": 86.0,
+      "ppi": 92.2222,
+      "final_rank": 1
+    },
+    {
+      "supplier_name": "Apex Systems",
+      "criteria": [
+        {
+          "criterion_id": 1,
+          "name": "Technical Capability",
+          "score": 9.0,
+          "max_score": 10.0,
+          "weight": 30.0,
+          "justification": "The proposal provides the quoted technical detail.",
+          "evidence": "The integration plan names SSO via SAML, procurement ERP exchange through REST, PDF text extraction, audit events, and export to JSON. Architecture diagrams identify separate ingestion, scoring, and review services.",
+          "benchmark": 9.0,
+          "gap": 0.0,
+          "relative_percent": 100.0
+        },
+        {
+          "criterion_id": 2,
+          "name": "Implementation Plan",
+          "score": 7.0,
+          "max_score": 10.0,
+          "weight": 20.0,
+          "justification": "The proposal provides the quoted implementation detail.",
+          "evidence": "A 15-week plan assigns a project manager, two engineers, a security lead, and a tester. Milestones: discovery weeks 1-2; build weeks 3-9; integration weeks 10-12; testing weeks 13-14; handover week 15. The risk register covers ERP delays.",
+          "benchmark": 10.0,
+          "gap": -3.0,
+          "relative_percent": 70.0
+        },
+        {
+          "criterion_id": 3,
+          "name": "Commercial Value",
+          "score": 6.0,
+          "max_score": 10.0,
+          "weight": 20.0,
+          "justification": "The proposal provides the quoted commercial detail.",
+          "evidence": "Fixed implementation fee: USD 138,000. Annual support: USD 22,000. Total first year: USD 160,000. Assumes one ERP connector and no migration of legacy files; additional connectors are priced separately.",
+          "benchmark": 9.0,
+          "gap": -3.0,
+          "relative_percent": 66.6667
+        },
+        {
+          "criterion_id": 4,
+          "name": "Security & Compliance",
+          "score": 9.0,
+          "max_score": 10.0,
+          "weight": 20.0,
+          "justification": "The proposal provides the quoted security detail.",
+          "evidence": "Controls include SAML SSO, least-privilege roles, encryption in transit and at rest, quarterly penetration tests, daily backups, 365-day audit retention, and an incident notification target of 24 hours. ISO 27001 certification is stated with certificate number AX-27001-24.",
+          "benchmark": 9.0,
+          "gap": 0.0,
+          "relative_percent": 100.0
+        },
+        {
+          "criterion_id": 5,
+          "name": "Support & Experience",
+          "score": 7.0,
+          "max_score": 10.0,
+          "weight": 10.0,
+          "justification": "The proposal provides the quoted support detail.",
+          "evidence": "Business-hours support with a four-hour response for critical incidents and 99.5% target availability. Apex lists two similar university projects and offers references, but no named contact details.",
+          "benchmark": 10.0,
+          "gap": -3.0,
+          "relative_percent": 70.0
+        }
+      ],
+      "risks": [
+        "The higher first-year price and separate connector charges may increase procurement cost."
+      ],
+      "overall_summary": "Apex proposes a modular web portal with a documented REST API, event-driven ingestion, and a managed relational database. It meets the 200-user target with a tested 500-user load profile.",
+      "submission_date": "2026-09-15",
+      "experience_rating": 8.5,
+      "absolute_score": 78.0,
+      "ppi": 84.3333,
+      "final_rank": 2
+    },
+    {
+      "supplier_name": "Orbit Digital",
+      "criteria": [
+        {
+          "criterion_id": 1,
+          "name": "Technical Capability",
+          "score": 6.0,
+          "max_score": 10.0,
+          "weight": 30.0,
+          "justification": "The proposal provides the quoted technical detail.",
+          "evidence": "The proposal describes configurable reviewer screens and a managed database. It says the solution integrates with the university ERP, but gives no interface specification, data mapping, or failure recovery design. A 300-user load test is offered.",
+          "benchmark": 9.0,
+          "gap": -3.0,
+          "relative_percent": 66.6667
+        },
+        {
+          "criterion_id": 2,
+          "name": "Implementation Plan",
+          "score": 7.0,
+          "max_score": 10.0,
+          "weight": 20.0,
+          "justification": "The proposal provides the quoted implementation detail.",
+          "evidence": "A 14-week plan covers discovery weeks 1-3, build weeks 4-10, test weeks 11-12, and rollout weeks 13-14. A project manager, three developers, and a support specialist are assigned. ERP dependencies are flagged but no fallback milestone is shown.",
+          "benchmark": 10.0,
+          "gap": -3.0,
+          "relative_percent": 70.0
+        },
+        {
+          "criterion_id": 3,
+          "name": "Commercial Value",
+          "score": 7.0,
+          "max_score": 10.0,
+          "weight": 20.0,
+          "justification": "The proposal provides the quoted commercial detail.",
+          "evidence": "Implementation fee: USD 110,000. Annual support: USD 19,000. Total first year: USD 129,000. Includes hosting and training. ERP customization is time-and-materials at USD 135 per hour.",
+          "benchmark": 9.0,
+          "gap": -2.0,
+          "relative_percent": 77.7778
+        },
+        {
+          "criterion_id": 4,
+          "name": "Security & Compliance",
+          "score": 6.0,
+          "max_score": 10.0,
+          "weight": 20.0,
+          "justification": "The proposal provides the quoted security detail.",
+          "evidence": "Controls include SSO, encrypted storage, weekly backups, role permissions, annual penetration testing, and a 90-day audit trail. Incident notification timing and privacy deletion policy are not stated.",
+          "benchmark": 9.0,
+          "gap": -3.0,
+          "relative_percent": 66.6667
+        },
+        {
+          "criterion_id": 5,
+          "name": "Support & Experience",
+          "score": 9.0,
+          "max_score": 10.0,
+          "weight": 10.0,
+          "justification": "The proposal provides the quoted support detail.",
+          "evidence": "A 24-hour help desk and one-hour critical response target are offered. Orbit lists five government deployments and three named reference organizations with contact details.",
+          "benchmark": 10.0,
+          "gap": -1.0,
+          "relative_percent": 90.0
+        }
+      ],
+      "risks": [
+        "ERP scope and customization cost are uncertain; security response timing is missing."
+      ],
+      "overall_summary": "Orbit Digital emphasizes prior public-sector delivery and a managed portal for document review, scorecards, and export.",
+      "submission_date": "2026-09-13",
+      "experience_rating": 9.5,
+      "absolute_score": 67.0,
+      "ppi": 71.8889,
+      "final_rank": 3
+    },
+    {
+      "supplier_name": "BrightPath Tech",
+      "criteria": [
+        {
+          "criterion_id": 1,
+          "name": "Technical Capability",
+          "score": 5.0,
+          "max_score": 10.0,
+          "weight": 30.0,
+          "justification": "The proposal provides the quoted technical detail.",
+          "evidence": "The solution uses a single application server and hosted database. BrightPath mentions an ERP connection but does not specify protocol, fields, error handling, or scale test results.",
+          "benchmark": 9.0,
+          "gap": -4.0,
+          "relative_percent": 55.5556
+        },
+        {
+          "criterion_id": 2,
+          "name": "Implementation Plan",
+          "score": 7.0,
+          "max_score": 10.0,
+          "weight": 20.0,
+          "justification": "The proposal provides the quoted implementation detail.",
+          "evidence": "An eight-week schedule covers discovery in week 1, configuration in weeks 2-5, testing in weeks 6-7, and launch in week 8. A lead developer and one tester are named by role. No contingency time is allocated.",
+          "benchmark": 10.0,
+          "gap": -3.0,
+          "relative_percent": 70.0
+        },
+        {
+          "criterion_id": 3,
+          "name": "Commercial Value",
+          "score": 9.0,
+          "max_score": 10.0,
+          "weight": 20.0,
+          "justification": "The proposal provides the quoted commercial detail.",
+          "evidence": "Fixed implementation fee: USD 65,000. Annual support: USD 12,000. Total first year: USD 77,000. Price includes one integration and 12 months of hosting; taxes are excluded.",
+          "benchmark": 9.0,
+          "gap": 0.0,
+          "relative_percent": 100.0
+        },
+        {
+          "criterion_id": 4,
+          "name": "Security & Compliance",
+          "score": 0,
+          "max_score": 10.0,
+          "weight": 20.0,
+          "justification": "The proposal provides the quoted security detail.",
+          "evidence": "The proposal says data will be encrypted and users will have passwords. It does not describe access roles, audit retention, independent testing, incident response, privacy controls, or certifications.",
+          "benchmark": 9.0,
+          "gap": -9.0,
+          "relative_percent": 0.0
+        },
+        {
+          "criterion_id": 5,
+          "name": "Support & Experience",
+          "score": 4.0,
+          "max_score": 10.0,
+          "weight": 10.0,
+          "justification": "The proposal provides the quoted support detail.",
+          "evidence": "Email support is available on business days with a two-day response target. BrightPath cites one small nonprofit deployment but supplies no reference contact.",
+          "benchmark": 10.0,
+          "gap": -6.0,
+          "relative_percent": 40.0
+        }
+      ],
+      "risks": [
+        "Security assurance and integration detail are limited; the accelerated plan has no schedule buffer."
+      ],
+      "overall_summary": "BrightPath proposes a compact portal focused on rapid deployment and low cost. It covers proposal upload, a review screen, and CSV export for the 200-user team.",
+      "submission_date": "2026-09-14",
+      "experience_rating": 4.0,
+      "absolute_score": 51.0,
+      "ppi": 54.6667,
+      "final_rank": 4
+    }
+  ],
+  "warnings": [
+    "BrightPath Tech: criterion 4 score clipped to range."
+  ],
+  "tie_break_order": [
+    "Higher PPI",
+    "Earlier submission date",
+    "Higher experience rating",
+    "Supplier name A to Z"
+  ],
+  "rules": {
+    "zero_benchmark_relative_percent": 100,
+    "rank_start": 1
+  }
+}
